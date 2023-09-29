@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+
+  server:
+    container_name: server
+    restart: on-failure
+    build:
+      context: server
+      dockerfile: Dockerfile
+    depends_on: [ db ]
+
+  client:
+    container_name: client
+    restart: on-failure
+    build:
+      context: client
+      dockerfile: Dockerfile
+    depends_on: [ server ]
+
+  db:
+    container_name: database
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_DB=mydb
+      - POSTGRES_PASSWORD=randompassword
+      - POSTGRES_USER=johndoe
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  pgweb:
+    container_name: pgweb
+    image: sosedoff/pgweb:latest
+    restart: on-failure
+    environment:
+      - PGWEB_DATABASE_URL=postgresql://johndoe:randompassword@database:5432/mydb?sslmode=disable
+    ports:
+      - '8081:8081'
+    depends_on: [ db ]
+    links: [ db ]

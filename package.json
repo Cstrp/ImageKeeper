@@ -1,0 +1,20 @@
+{
+  "name": "image_keeper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "npm run start:dev --prefix server",
+    "server-install": "npm install --prefix server",
+    "client": "npm run dev --prefix client",
+    "client-install": "npm install --prefix client",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.1",
+    "prettier": "^3.0.3"
+  }
+}
