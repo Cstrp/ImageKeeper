@@ -1,14 +1,23 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { CloudinaryModule } from './cloudinary';
 import { CronModule } from './cron';
-import { ImagesModule } from './images';
 import { DatabaseModule } from './database';
+import { ImagesModule } from './images';
+import { ConfigModule } from '@nestjs/config';
+import { LoggerModule } from 'nestjs-pino';
+import { loggerConfig } from './config';
 
 @Module({
-  imports: [CloudinaryModule, CronModule, ImagesModule, DatabaseModule],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    CronModule,
+    ImagesModule,
+    DatabaseModule,
+    LoggerModule.forRoot(loggerConfig),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      cache: true,
+    }),
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

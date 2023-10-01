@@ -1,4 +1,11 @@
 import { Module } from '@nestjs/common';
+import { ImageService } from './services';
+import { ImageController } from './controllers';
+import { CloudinaryModule } from '../cloudinary';
 
-@Module({})
+@Module({
+  imports: [CloudinaryModule],
+  providers: [ImageService],
+  controllers: [ImageController],
+})
 export class ImagesModule {}

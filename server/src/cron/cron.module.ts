@@ -1,4 +1,8 @@
 import { Module } from '@nestjs/common';
+import { CronService } from './services';
 
-@Module({})
+@Module({
+  providers: [CronService],
+  exports: [CronService],
+})
 export class CronModule {}

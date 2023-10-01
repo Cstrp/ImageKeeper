@@ -12,8 +12,9 @@ datasource db {
 
 model Image {
   id         String   @id @default(uuid())
+  public_id  String   @unique
   url        String
-  label      String
+  label      String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 }
