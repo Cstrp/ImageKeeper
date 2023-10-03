@@ -2,10 +2,10 @@ import { LeftRightArrow } from '../Icons/LeftRightArrow.tsx';
 
 export const Logo = () => {
   return (
-    <div>
-      <strong>Image</strong>
+    <div className={'flex items-center gap-2'}>
+      <strong className={'lg:text-2xl text-zinc-900'}>Image</strong>
       <LeftRightArrow />
-      <strong>Keeper</strong>
+      <strong className={'lg:text-2xl text-zinc-900'}>Keeper</strong>
     </div>
   );
 };

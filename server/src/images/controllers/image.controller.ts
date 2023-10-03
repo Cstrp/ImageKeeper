@@ -8,13 +8,13 @@ import {
   Param,
   Post,
   Put,
-  UploadedFile,
+  Req,
   UseInterceptors,
 } from '@nestjs/common';
-import { ImageService } from '../services';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Request } from 'express';
 import { multerConfig } from '../../config/multerConfig';
-
+import { ImageService } from '../services';
 @Controller('')
 export class ImageController {
   constructor(private readonly imageService: ImageService) {}
@@ -28,11 +28,8 @@ export class ImageController {
   @Post('upload')
   @HttpCode(HttpStatus.OK)
   @UseInterceptors(FileInterceptor('image', multerConfig))
-  public async upload(
-    @UploadedFile() image: Express.Multer.File,
-    @Body('label') label: string,
-  ) {
-    return await this.imageService.uploadImages(image, label);
+  public async upload(@Req() req: Request) {
+    return await this.imageService.uploadImages(req.file!);
   }
 
   @Put('update/:id')

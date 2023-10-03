@@ -1,19 +1,31 @@
+import axios from 'axios';
+import { Image } from '../types/image.ts';
 import { errHandler } from '../utils/errHandler.ts';
-import { api } from './api.ts';
+import { notify } from '../utils/notify.ts';
+import { API_URL } from './api.ts';
 
 export const uploadImage = async (file: File | null) => {
   try {
-    if (file) {
-      const formData = new FormData();
-      formData.append('image', file);
+    if (!file) return;
 
-      const { data, status } = await api.post('/upload', formData);
+    const formData = new FormData();
+    formData.append('image', file);
 
-      if (status === 200) {
-        return data;
-      }
+    const { data, status } = await axios.post<Image>(
+      `${API_URL}/upload`,
+      formData,
+    );
+
+    if (status === 200) {
+      notify({
+        type: 'success',
+        message: 'Done!',
+        description: 'Image uploaded successfully.',
+      });
+
+      return data;
     }
   } catch (error) {
-    errHandler(error, 'Error while uploading image.');
+    errHandler(error, 'Error uploading image.');
   }
 };

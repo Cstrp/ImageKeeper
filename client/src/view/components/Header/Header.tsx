@@ -1,13 +1,11 @@
+import React from 'react';
 import { Logo } from '../Logo/Logo';
 import { UploadBtn } from '../UploadBtn/UploadBtn.tsx';
+import { HeaderProps } from './HeaderProps.ts';
 
-interface HeaderProps {
-  quantity: number;
-}
-
-export const Header = ({ quantity }: HeaderProps) => {
+export const Header: React.FC<HeaderProps> = ({ quantity }) => {
   return (
-    <header className={''}>
+    <header className={'mt-5 flex items-center'}>
       <div className={'container mx-auto flex items-center'}>
         <div className={'flex flex-col gap-7'}>
           <Logo />
