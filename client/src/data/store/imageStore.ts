@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable } from 'mobx';
+import { makeAutoObservable, runInAction } from 'mobx';
 import { removeImage } from '../api/removeImage';
 import { updateImage } from '../api/updateImage';
 import { uploadImage } from '../api/uploadImage';
@@ -6,34 +6,29 @@ import { Image } from '../types';
 import { groupImage } from '../utils';
 
 class ImageStore {
-  public images: Record<string, Image[]> = {};
-
   constructor() {
-    makeAutoObservable(this, {
-      images: observable,
-      setImages: action,
-      getImages: observable,
-      addImage: action,
-      removeImage: action,
-      updateLabel: action,
-    });
+    makeAutoObservable(this);
   }
+
+  public images: Record<string, Image[]> = {};
 
   public setImages(images: Image[]) {
     const groupedImages = groupImage(images);
-    this.images = groupedImages;
+    runInAction(() => {
+      this.images = groupedImages;
+    });
   }
 
-  public getImages(): Record<string, Image[]> {
+  public getImages = (): Record<string, Image[]> => {
     return this.images;
-  }
+  };
 
-  public getImagasLength(): number {
+  public getImagesLength = (): number => {
     return Object.values(this.images).reduce(
       (acc, imageGroup) => acc + imageGroup.length,
       0,
     );
-  }
+  };
 
   public async addImage(image: File | null) {
     if (!image) return;
@@ -51,7 +46,9 @@ class ImageStore {
       updatedImages[date] = [newImage!, ...this.images[date]];
     });
 
-    this.images = updatedImages;
+    runInAction(() => {
+      this.images = updatedImages;
+    });
   }
 
   public async removeImage(image_id: string) {
@@ -63,7 +60,10 @@ class ImageStore {
       );
     });
 
-    this.images = updatedImages;
+    runInAction(() => {
+      this.images = updatedImages;
+    });
+
     await removeImage(image_id);
   }
 
@@ -79,8 +79,11 @@ class ImageStore {
       });
     });
 
+    runInAction(() => {
+      this.images = updatedImages;
+    });
+
     await updateImage(image_id, label);
-    this.images = updatedImages;
   }
 }
 

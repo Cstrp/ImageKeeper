@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Image } from '../types';
-import { errHandler } from '../utils/errHandler.ts';
+import { notify } from '../utils/notify.ts';
 import { API_URL } from './api.ts';
 
 export const getAllImages = async () => {
@@ -13,6 +13,11 @@ export const getAllImages = async () => {
 
     return [];
   } catch (error) {
-    errHandler(error, 'Error while getting images.');
+    console.error('Error fetching images', error);
+    notify({
+      type: 'info',
+      message: 'Something went wrong',
+      description: 'You do not have any images. Please upload one.',
+    });
   }
 };

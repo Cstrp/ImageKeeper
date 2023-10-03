@@ -18,7 +18,9 @@ export const ImageEditor = observer(
 
     const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
       if (evt.target.value.length > 100) {
-        setNewLabel(evt.target.value.slice(0, 100));
+        return;
+      } else {
+        setNewLabel(evt.target.value);
       }
     };
 
@@ -31,22 +33,22 @@ export const ImageEditor = observer(
       }
     };
 
-    const handeKeydown = (evt: KeyboardEvent) => {
-      if (evt.key === 'Escape') {
-        handleCancel();
-      }
-    };
-
-    const handleClick = (evt: MouseEvent) => {
-      if (
-        windowRef.current &&
-        !windowRef.current.contains(evt.target as Node)
-      ) {
-        handleCancel();
-      }
-    };
-
     useEffect(() => {
+      const handeKeydown = (evt: KeyboardEvent) => {
+        if (evt.key === 'Escape') {
+          handleCancel();
+        }
+      };
+
+      const handleClick = (evt: MouseEvent) => {
+        if (
+          windowRef.current &&
+          !windowRef.current.contains(evt.target as Node)
+        ) {
+          handleCancel();
+        }
+      };
+
       if (isOpen) {
         document.addEventListener('mousedown', handleClick);
         document.addEventListener('keydown', handeKeydown);
@@ -54,7 +56,7 @@ export const ImageEditor = observer(
         document.removeEventListener('mousedown', handleClick);
         document.removeEventListener('keydown', handeKeydown);
       }
-    }, [isOpen]);
+    }, [handleCancel, isOpen]);
 
     return (
       <>

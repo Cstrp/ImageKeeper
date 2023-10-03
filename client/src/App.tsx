@@ -1,8 +1,7 @@
 import { observer } from 'mobx-react';
 import { useEffect } from 'react';
 import { getAllImages } from './data/api/getAllImages.ts';
-import { imageStore } from './data/store/imageStore.ts';
-import { quantityStore } from './data/store/quantity.Store';
+import { imageStore, quantityStore } from './data/store';
 import { Gallery, Header, Hollow } from './view/components';
 
 export const App = observer(() => {
@@ -11,11 +10,12 @@ export const App = observer(() => {
 
   useEffect(() => {
     getAllImages().then((loadedImages) => {
-      imageStore.setImages(loadedImages!);
+      if (loadedImages) {
+        imageStore.setImages(loadedImages);
+        quantityStore.setQuantity(imageStore.getImagesLength());
+      }
     });
   }, []);
-
-  quantityStore.setQuantity(imageStore.getImagasLength());
 
   return (
     <div className={'relative flex flex-col max-h-[100vh]'}>
