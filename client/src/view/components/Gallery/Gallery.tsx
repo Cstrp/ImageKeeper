@@ -22,8 +22,8 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
               'flex flex-col lg:flex-row flex-wrap gap-3.5 max-xl:mx-auto'
             }
           >
-            {imageGroup.map((image) => (
-              <GalleryItem key={image.id} image={image} />
+            {imageGroup.map((image, idx) => (
+              <GalleryItem key={image.id ?? idx} image={image} />
             ))}
           </div>
         </div>

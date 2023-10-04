@@ -1,9 +1,8 @@
-import { Logo } from '../Logo/Logo.tsx';
+import { handleUpload, imageStore, quantityStore } from '../../../data';
 import { UploadBtn } from '../UploadBtn/UploadBtn.tsx';
-import React, { useRef, useState } from 'react';
 import { DropZone } from '../Dropzone/Dropzone.tsx';
-import { handleUpload } from '../../../data/utils';
-import { imageStore, quantityStore } from '../../../data/store';
+import React, { useRef, useState } from 'react';
+import { Logo } from '../Logo/Logo.tsx';
 import { observer } from 'mobx-react';
 
 export const Hollow = observer(() => {

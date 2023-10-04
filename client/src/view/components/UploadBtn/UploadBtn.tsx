@@ -1,9 +1,8 @@
-import { Button } from 'antd';
-import { observer } from 'mobx-react';
+import { handleUpload, imageStore, quantityStore } from '../../../data';
 import { ChangeEvent, useRef } from 'react';
-import { imageStore, quantityStore } from '../../../data/store';
-import { handleUpload } from '../../../data/utils';
 import { Upload } from '../Icons/Upload';
+import { observer } from 'mobx-react';
+import { Button } from 'antd';
 
 export const UploadBtn = observer(() => {
   const fileInput = useRef<HTMLInputElement | null>(null);

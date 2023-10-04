@@ -1,12 +1,18 @@
-import axios from 'axios';
-import { Image } from '../types/image.ts';
-import { errHandler } from '../utils/errHandler.ts';
-import { notify } from '../utils/notify.ts';
+import axios, { AxiosProgressEvent, AxiosRequestConfig } from 'axios';
+import { Image } from '../types';
+import { errHandler, notify } from '../utils';
 import { API_URL } from './api.ts';
 
-export const uploadImage = async (file: File | null) => {
+export const uploadImage = async (
+  file: File | null,
+  onUploadProgress?: (evt: AxiosProgressEvent) => void,
+) => {
   try {
     if (!file) return;
+
+    const config: AxiosRequestConfig = {
+      onUploadProgress,
+    };
 
     const formData = new FormData();
     formData.append('image', file);
@@ -14,9 +20,8 @@ export const uploadImage = async (file: File | null) => {
     const { data, status } = await axios.post<Image>(
       `${API_URL}/upload`,
       formData,
+      config,
     );
-
-    console.log('FROM UPLOAD', data);
 
     if (status === 200) {
       notify({

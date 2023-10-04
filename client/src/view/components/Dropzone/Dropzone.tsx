@@ -1,13 +1,6 @@
 import React from 'react';
 import { Upload } from '../Icons/Upload';
-
-interface DropzoneProps {
-  isDropped: boolean;
-  handleEnter(evt: React.DragEvent): void;
-  handleLeave(evt: React.DragEvent): void;
-  handleDrop(evt: React.DragEvent): void;
-  dropRef: React.MutableRefObject<HTMLDivElement | null>;
-}
+import { DropzoneProps } from './DropzoneProps.ts';
 
 export const DropZone: React.FC<DropzoneProps> = ({
   isDropped,

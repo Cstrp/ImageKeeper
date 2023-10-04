@@ -1,4 +1,4 @@
-import * as moment from 'moment';
+import moment from 'moment';
 
 export interface Image {
   id?: string;
@@ -7,7 +7,7 @@ export interface Image {
   url?: string;
   label?: string;
   preview?: string;
-  progress?: number;
+  upload?: boolean;
 
   created_at?: moment.Moment;
   updated_at?: moment.Moment;

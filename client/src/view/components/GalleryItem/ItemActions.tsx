@@ -1,11 +1,11 @@
+import { Actions } from '../../../data';
+import * as React from 'react';
+import { Button } from 'antd';
 import {
   DeleteOutlined,
   DownloadOutlined,
   EditOutlined,
 } from '@ant-design/icons';
-import { Button } from 'antd';
-import * as React from 'react';
-import { Actions } from '../../../data/types';
 
 export const ItemActions: React.FC<Actions> = ({
   handleDelete,

@@ -1,7 +1,6 @@
 import axios from 'axios';
-import { errHandler } from '../utils/errHandler.ts';
-import { notify } from '../utils/notify.ts';
 import { API_URL } from './api.ts';
+import { errHandler, notify } from '../utils';
 
 export const updateImage = async (id: string, label: string) => {
   try {

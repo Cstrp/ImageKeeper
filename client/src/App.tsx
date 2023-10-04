@@ -1,8 +1,7 @@
-import { observer } from 'mobx-react';
-import { imageStore, quantityStore } from './data/store';
+import { getAllImages, imageStore, quantityStore } from './data';
 import { Gallery, Header, Hollow } from './view';
+import { observer } from 'mobx-react';
 import { useEffect } from 'react';
-import { getAllImages } from './data/api/getAllImages.ts';
 
 export const App = observer(() => {
   const { quantity } = quantityStore;
@@ -10,7 +9,7 @@ export const App = observer(() => {
   useEffect(() => {
     getAllImages().then((loadedImages) => {
       if (loadedImages) {
-        imageStore.setImages(loadedImages!);
+        imageStore.setImages(loadedImages);
         quantityStore.setQuantity(imageStore.getImagesLength());
       }
     });

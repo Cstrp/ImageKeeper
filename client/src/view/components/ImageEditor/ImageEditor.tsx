@@ -1,15 +1,9 @@
-import { CheckOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
-import { observer } from 'mobx-react';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { imageStore } from '../../../data/store';
-import { Image } from '../../../data/types';
-
-interface ImageEditorProps {
-  image: Image;
-  isOpen: boolean;
-  handleCancel: () => void;
-}
+import { ImageEditorProps } from './ImageEditorProps.ts';
+import { CheckOutlined } from '@ant-design/icons';
+import { imageStore } from '../../../data';
+import { observer } from 'mobx-react';
+import { Button } from 'antd';
 
 export const ImageEditor = observer(
   ({ image, isOpen, handleCancel }: ImageEditorProps) => {
