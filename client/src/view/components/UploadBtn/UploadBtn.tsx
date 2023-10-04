@@ -2,28 +2,16 @@ import { Button } from 'antd';
 import { observer } from 'mobx-react';
 import { ChangeEvent, useRef } from 'react';
 import { imageStore, quantityStore } from '../../../data/store';
-import { isValidFormat } from '../../../data/utils';
+import { handleUpload } from '../../../data/utils';
 import { Upload } from '../Icons/Upload';
 
 export const UploadBtn = observer(() => {
   const fileInput = useRef<HTMLInputElement | null>(null);
 
   const handleChange = async (evt: ChangeEvent<HTMLInputElement>) => {
-    const files = evt.target.files;
+    const { files } = evt.target;
 
-    if (Array.isArray(files) || files!.length) {
-      for (const file of files!) {
-        if (isValidFormat(file)) {
-          await imageStore.addImage(file!);
-          quantityStore.addQuantity();
-        }
-      }
-    } else {
-      if (isValidFormat(files![0])) {
-        await imageStore.addImage(files![0]);
-        quantityStore.addQuantity();
-      }
-    }
+    await handleUpload(files, imageStore, quantityStore);
   };
 
   const handleClick = () => {

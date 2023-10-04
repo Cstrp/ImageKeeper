@@ -6,7 +6,7 @@ import { Image } from '../types';
 import { groupImage } from '../utils';
 import moment from 'moment';
 
-class ImageStore {
+export class ImageStore {
   constructor() {
     makeAutoObservable(this);
   }
@@ -36,7 +36,7 @@ class ImageStore {
 
     const uploadedImage = await uploadImage(image);
     const updatedImages: Record<string, Image[]> = {};
-    const key = moment().format('DD MMMM');
+    const key = moment().format("MMMM ' D");
 
     Object.keys(this.images).forEach((date) => {
       updatedImages[date] = [...this.images[date]];

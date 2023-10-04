@@ -3,28 +3,29 @@ import { Upload } from '../Icons/Upload';
 
 interface DropzoneProps {
   isDropped: boolean;
-  setIsDropped: React.Dispatch<React.SetStateAction<boolean>>;
+  handleEnter(evt: React.DragEvent): void;
+  handleLeave(evt: React.DragEvent): void;
+  handleDrop(evt: React.DragEvent): void;
+  dropRef: React.MutableRefObject<HTMLDivElement | null>;
 }
 
 export const DropZone: React.FC<DropzoneProps> = ({
   isDropped,
-  setIsDropped,
+  dropRef,
+  handleLeave,
+  handleEnter,
+  handleDrop,
 }) => {
-  const handleDrop = (evt: React.DragEvent) => {
-    evt.preventDefault();
-    console.log(evt.dataTransfer.files);
-    setIsDropped(true);
-  };
-
-  console.log(isDropped);
-
   return (
     <>
       <div
-        className={`fixed inset-0 flex items-center justify-center backdrop-blur ${
+        ref={dropRef}
+        className={`w-full h-full fixed inset-0 flex items-center justify-center backdrop-blur ${
           isDropped ? '' : 'hidden'
         }`}
         onDrop={handleDrop}
+        onDragEnter={handleEnter}
+        onDragLeave={handleLeave}
       >
         <div>
           <div className="flex flex-col items-center justify-center gap-5">

@@ -46,7 +46,7 @@ export const GalleryItem: React.FC<GalleryItemProps> = observer(({ image }) => {
         </span>
       </div>
       <img
-        src={image.url}
+        src={image.url ?? image.preview}
         alt={image.label}
         className={'w-full lg:max-w-[335px] rounded-lg z-10'}
       />

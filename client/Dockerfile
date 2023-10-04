@@ -1,4 +1,13 @@
-FROM ubuntu:latest
-LABEL authors="cstrp"
+FROM node:lts-hydrogen as development
 
-ENTRYPOINT ["top", "-b"]
+WORKDIR /app
+
+COPY package.json pnpm-lock.yaml ./
+
+RUN npm i -g pnpm && pnpm i
+
+COPY . .
+
+EXPOSE 5173
+
+

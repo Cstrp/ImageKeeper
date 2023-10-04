@@ -1,6 +1,6 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 
-class QuantityStore {
+export class QuantityStore {
   constructor() {
     makeAutoObservable(this);
   }
