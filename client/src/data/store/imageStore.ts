@@ -4,6 +4,7 @@ import { updateImage } from '../api/updateImage';
 import { uploadImage } from '../api/uploadImage';
 import { Image } from '../types';
 import { groupImage } from '../utils';
+import moment from 'moment';
 
 class ImageStore {
   constructor() {
@@ -35,16 +36,16 @@ class ImageStore {
 
     const uploadedImage = await uploadImage(image);
     const updatedImages: Record<string, Image[]> = {};
+    const key = moment().format('DD MMMM');
 
     Object.keys(this.images).forEach((date) => {
-      const newImage: Image = {
-        ...uploadedImage,
-        preview: image.name,
-        progress: 0,
-      };
-
-      updatedImages[date] = [newImage!, ...this.images[date]];
+      updatedImages[date] = [...this.images[date]];
     });
+
+    updatedImages[key] = [
+      ...(updatedImages[key] || []),
+      { ...uploadedImage, preview: URL.createObjectURL(image) },
+    ];
 
     runInAction(() => {
       this.images = updatedImages;

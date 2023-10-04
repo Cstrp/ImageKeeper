@@ -24,6 +24,7 @@ export const ItemActions: React.FC<Actions> = ({
         {buttons.map((button, idx) => (
           <Button
             size="small"
+            type="text"
             key={idx}
             className={'action text-lg border-none text-[#FCF6B1]'}
             icon={button.icon}

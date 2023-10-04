@@ -20,6 +20,26 @@ img {
   height: auto;
 }
 
+.action {
+  transition: all 0.3s ease;
+}
+
 .action:hover {
-  color: rgba(252, 246, 177, 0.75) !important;
+  color: bisque !important;
+}
+
+.fadeIn {
+  animation: fadeIn ease-in;
+  animation-duration: 0.2s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

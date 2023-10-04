@@ -1,9 +1,8 @@
 import { Button } from 'antd';
 import { observer } from 'mobx-react';
 import { ChangeEvent, useRef } from 'react';
-import { quantityStore } from '../../../data/store';
-import { imageStore } from '../../../data/store/imageStore';
-import { isValidFormat } from '../../../data/utils/isValidFormat';
+import { imageStore, quantityStore } from '../../../data/store';
+import { isValidFormat } from '../../../data/utils';
 import { Upload } from '../Icons/Upload';
 
 export const UploadBtn = observer(() => {

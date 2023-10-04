@@ -2,8 +2,7 @@ import saveAs from 'file-saver';
 import { observer } from 'mobx-react';
 import * as React from 'react';
 import { useState } from 'react';
-import { imageStore } from '../../../data/store/imageStore.ts';
-import { quantityStore } from '../../../data/store/quantityStore.ts';
+import { imageStore, quantityStore } from '../../../data/store';
 import { Image } from '../../../data/types';
 import { momentFormat } from '../../../data/utils';
 import { ImageEditor } from '../ImageEditor/ImageEditor.tsx';
@@ -47,7 +46,7 @@ export const GalleryItem: React.FC<GalleryItemProps> = observer(({ image }) => {
         </span>
       </div>
       <img
-        src={image.url! ? image.url! : image.preview!}
+        src={image.url}
         alt={image.label}
         className={'w-full lg:max-w-[335px] rounded-lg z-10'}
       />

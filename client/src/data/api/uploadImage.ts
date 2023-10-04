@@ -16,6 +16,8 @@ export const uploadImage = async (file: File | null) => {
       formData,
     );
 
+    console.log('FROM UPLOAD', data);
+
     if (status === 200) {
       notify({
         type: 'success',

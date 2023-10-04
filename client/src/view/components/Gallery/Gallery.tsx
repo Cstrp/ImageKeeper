@@ -1,6 +1,6 @@
-import * as React from 'react';
-import { GalleryItem } from '../GalleryItem/GalleryItem.tsx';
+import React from 'react';
 import { GalleryProps } from './GalleryProps.ts';
+import { GalleryItem } from '../index.ts';
 
 export const Gallery: React.FC<GalleryProps> = ({ images }) => {
   return (
@@ -18,7 +18,9 @@ export const Gallery: React.FC<GalleryProps> = ({ images }) => {
             </div>
           </div>
           <div
-            className={'flex flex-col lg:flex-row flex-wrap gap-3.5 mx-auto'}
+            className={
+              'flex flex-col lg:flex-row flex-wrap gap-3.5 max-xl:mx-auto'
+            }
           >
             {imageGroup.map((image) => (
               <GalleryItem key={image.id} image={image} />

@@ -2,7 +2,7 @@ import { CheckOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 import { observer } from 'mobx-react';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { imageStore } from '../../../data/store/imageStore';
+import { imageStore } from '../../../data/store';
 import { Image } from '../../../data/types';
 
 interface ImageEditorProps {
@@ -15,12 +15,14 @@ export const ImageEditor = observer(
   ({ image, isOpen, handleCancel }: ImageEditorProps) => {
     const [newLabel, setNewLabel] = useState<string>('');
     const windowRef = useRef<HTMLDivElement | null>(null);
+    const btnRef = useRef<HTMLButtonElement | null>(null);
 
     const handleChange = (evt: ChangeEvent<HTMLInputElement>) => {
-      if (evt.target.value.length > 100) {
-        return;
-      } else {
-        setNewLabel(evt.target.value);
+      const value = evt.target.value;
+      const regex = /^[a-z Z-a|0-9]{0,100}$/i;
+
+      if (regex.test(value)) {
+        setNewLabel(value);
       }
     };
 
@@ -33,35 +35,46 @@ export const ImageEditor = observer(
       }
     };
 
+    const handeKeydown = (evt: KeyboardEvent) => {
+      if (evt.key === 'Escape') {
+        handleCancel();
+      }
+
+      if (evt.key === 'Enter') {
+        btnRef.current?.click();
+      }
+    };
+
+    const handleClick = (evt: MouseEvent) => {
+      if (
+        windowRef.current &&
+        !windowRef.current.contains(evt.target as Node)
+      ) {
+        handleCancel();
+      }
+    };
+
     useEffect(() => {
-      const handeKeydown = (evt: KeyboardEvent) => {
-        if (evt.key === 'Escape') {
-          handleCancel();
-        }
-      };
-
-      const handleClick = (evt: MouseEvent) => {
-        if (
-          windowRef.current &&
-          !windowRef.current.contains(evt.target as Node)
-        ) {
-          handleCancel();
-        }
-      };
-
       if (isOpen) {
         document.addEventListener('mousedown', handleClick);
         document.addEventListener('keydown', handeKeydown);
-      } else {
+      }
+
+      return () => {
         document.removeEventListener('mousedown', handleClick);
         document.removeEventListener('keydown', handeKeydown);
-      }
+      };
     }, [handleCancel, isOpen]);
 
     return (
       <>
         {isOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm modal">
+          <div
+            className={`${
+              isOpen ? 'fadeIn' : ''
+            } fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm modal transition-opacity transform duration-300`}
+            style={{ animationFillMode: isOpen ? 'forwards' : '' }}
+          >
             <div className="p-6 " ref={windowRef}>
               <button
                 onClick={handleCancel}
@@ -70,7 +83,7 @@ export const ImageEditor = observer(
                 <span className="-mt-1 text-3xl">&times;</span> Close editor
               </button>
               <div className="flex flex-col items-center gap-7">
-                <p className="text-3xl font-semibold leading-7 text-center text-zinc-200">
+                <p className="text-3xl font-semibold leading-7 text-center text-zinc-700">
                   Set custom label
                 </p>
                 <img
@@ -91,6 +104,7 @@ export const ImageEditor = observer(
                     </span>
                   </div>
                   <Button
+                    ref={btnRef}
                     type="text"
                     onClick={handleOk}
                     icon={<CheckOutlined />}
