@@ -1,9 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CloudinaryService } from '../../cloudinary/services';
-import { DatabaseService } from '../../database/services/database.service';
+import { DatabaseService } from '../../database/services';
 
 @Injectable()
 export class ImageService {
+  public isUploaded: boolean = false;
+
   constructor(
     private readonly dbService: DatabaseService,
     private readonly cloudService: CloudinaryService,
@@ -15,13 +17,11 @@ export class ImageService {
     });
   }
 
-  public async getImage(id: string) {
-    return await this.dbService.image.findFirst({ where: { id } });
-  }
-
   public async uploadImages(image: Express.Multer.File) {
     const result = await this.cloudService.upload(image.path);
+
     if (result) {
+      this.isUploaded = true;
       const { secure_url: url, public_id } = result;
       return await this.dbService.image.create({
         data: { url, public_id },

@@ -7,5 +7,6 @@ import { CloudinaryModule } from '../cloudinary';
   imports: [CloudinaryModule],
   providers: [ImageService],
   controllers: [ImageController],
+  exports: [ImageService],
 })
 export class ImagesModule {}

@@ -61,11 +61,8 @@ export const GalleryItem: React.FC<GalleryItemProps> = observer(({ image }) => {
 
       {showPreview && (
         <div
-          className="max-w-md absolute inset-0 flex items-center justify-center text-white font-semibold"
+          className="max-w-md absolute inset-0 flex items-center justify-center text-white font-semibold bg-gray-100 z-10 h-full"
           style={{
-            background: 'rgba(238,238,238,0.3)',
-            zIndex: 1,
-            height: '100%',
             width: `${(clientWidth! * imageStore.progress) / 100}px`,
           }}
         />
