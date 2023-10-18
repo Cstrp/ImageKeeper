@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+import { Cron, CronExpression } from '@nestjs/schedule';
 import * as fs from 'fs';
 import { ImageService } from '../../images/services';
 
 @Injectable()
 export class CronService {
-  constructor(private readonly imageService: ImageService) {}
+  constructor(private readonly imageService: ImageService) { }
 
-  @Cron('0 0 7 * * *')
+  @Cron(CronExpression.EVERY_12_HOURS)
   public cleanupImages() {
     this.cleanup();
   }
